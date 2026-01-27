@@ -6,9 +6,10 @@ POST https://localhost:8000/api/accounts
 Content-Type: application/json
 
 {
-  "firstName": "Jane",
+  "firstName": "John",
   "lastName": "Doe",
-  "socialSecurityNumber": "19900101-2013",
-  "email": "jane@doe.com"
+  "socialSecurityNumber": "19820621-1578",
+  "email": "john@doe.com"
 }
+
 
