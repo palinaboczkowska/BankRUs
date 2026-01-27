@@ -6,10 +6,22 @@ POST https://localhost:8000/api/accounts
 Content-Type: application/json
 
 {
-  "firstName": "John",
+  "firstName": "Kelly",
   "lastName": "Doe",
-  "socialSecurityNumber": "19820621-1578",
-  "email": "john@doe.com"
+  "socialSecurityNumber": "19910321-7205",
+  "email": "kelly@doe.com"
 }
 
+### Öppna bankkonto
+POST https://localhost:8000/api/bank-accounts
+Content-Type: application/json
+
+{
+  "userId": "2c7cc717-5dbe-4db3-a91f-6f40f91e2bff"
+}
+
+
+### Hämta alla konton för en användare
+
+GET https://localhost:8000/api/accounts/2c7cc717-5dbe-4db3-a91f-6f40f91e2bff
 

@@ -12,6 +12,11 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+        builder.Entity<BankAccount>(builder =>
+        {
+            builder.Property(x => x.Balance)
+              .HasPrecision(18, 2);
+        });
     }
 }
 

@@ -1,5 +1,8 @@
 ﻿using BankRUs.Api.Dtos.Accounts;
+using BankRUs.Api.Dtos.BankAccounts;
+using BankRUs.Application.Abstractions;
 using BankRUs.Application.UseCases.OpenAccount;
+using BankRUs.Intrastructure.Persistance;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
 
@@ -10,10 +13,12 @@ namespace BankRUs.Api.Controllers;
 public class AccountsController : ControllerBase
 {
     private readonly OpenAccountHandler _openAccountHandler;
+    private readonly IAccountRepository _accountRepository;
 
-    public AccountsController(OpenAccountHandler openAccountHandler)
+    public AccountsController(OpenAccountHandler openAccountHandler, IAccountRepository accountRepository)
     {
         _openAccountHandler = openAccountHandler;
+        _accountRepository = accountRepository;
     }
 
     // POST /api/accounts (Endpoint /  API endpoint)
@@ -35,6 +40,18 @@ public class AccountsController : ControllerBase
 
         // Returnera 201 Created
         return Created(string.Empty, response);
+    }
+
+    [HttpGet("{userId:guid}")]
+    public async Task<ActionResult<IEnumerable<BankAccountDto>>> GetAccounts(Guid userId)
+    {
+        var accounts = await _accountRepository.GetByUserIdAsync(userId);
+
+        var result = accounts.Select(a =>
+            new BankAccountDto(a.Id, a.AccountNumber, a.Balance)
+        );
+
+        return Ok(result);
     }
 
     private static bool IsValidLuhn(string digits)

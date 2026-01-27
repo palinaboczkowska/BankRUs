@@ -1,6 +1,7 @@
 using BankRUs.Application.Abstractions;
 using BankRUs.Application.Identity;
 using BankRUs.Application.UseCases.OpenAccount;
+using BankRUs.Application.UseCases.OpenBankAccount;
 using BankRUs.Intrastructure.Email;
 using BankRUs.Intrastructure.Identity;
 using BankRUs.Intrastructure.Persistance;
@@ -31,6 +32,7 @@ builder.Services.AddScoped<OpenAccountHandler>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddScoped<IAccountRepository, AccountRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
+builder.Services.AddScoped<OpenBankAccountHandler>();
 
 
 // 3 typer av livslängder på objekt
