@@ -50,12 +50,12 @@ public class AccountsController : ControllerBase
     }
 
     [HttpGet("{userId:guid}")]
-    public async Task<ActionResult<IEnumerable<BankAccountDto>>> GetAccounts(Guid userId)
+    public async Task<ActionResult<IEnumerable<BankAccountResponseDto>>> GetAccounts(Guid userId)
     {
         var accounts = await _accountRepository.GetByUserIdAsync(userId);
 
         var result = accounts.Select(a =>
-            new BankAccountDto(a.Name, a.Id, a.AccountNumber, a.Balance)
+            new BankAccountResponseDto(a.Name, a.Id, a.AccountNumber, a.Balance)
         );
 
         return Ok(result);

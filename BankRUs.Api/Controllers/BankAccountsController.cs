@@ -26,7 +26,7 @@ namespace BankRUs.Api.Controllers
 
             var result = await _handler.HandleAsync(command);
 
-            var response = new BankAccountDto(
+            var response = new BankAccountResponseDto(
                 AccountId: result.Id,
                 AccountNumber: result.AccountNumber,
                 Name: result.Name,

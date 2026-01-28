@@ -1,6 +1,6 @@
 ﻿namespace BankRUs.Api.Dtos.BankAccounts
 {
-    public record BankAccountDto
+    public record BankAccountResponseDto
         (
         string Name,
         Guid AccountId, 
