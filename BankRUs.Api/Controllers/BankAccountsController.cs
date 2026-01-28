@@ -1,4 +1,5 @@
-﻿using BankRUs.Application.UseCases.OpenAccount;
+﻿using BankRUs.Api.Dtos.BankAccounts;
+using BankRUs.Application.UseCases.OpenAccount;
 using BankRUs.Application.UseCases.OpenBankAccount;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,10 +17,24 @@ namespace BankRUs.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<OpenAccountResult>> OpenBankAccount(OpenBankAccountCommand command)
+        public async Task<IActionResult> OpenBankAccount(CreateBankAccountRequestDto request)
         {
+            var command = new OpenBankAccountCommand(
+                UserId: request.UserId,
+                Name: request.Name
+            );
+
             var result = await _handler.HandleAsync(command);
-            return Created(string.Empty, result);
+
+            var response = new BankAccountDto(
+                AccountId: result.Id,
+                AccountNumber: result.AccountNumber,
+                Name: result.Name,
+                Balance: result.Balance
+            );
+
+            return Created(string.Empty, response);
         }
     }
 }
+

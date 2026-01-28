@@ -9,24 +9,34 @@ namespace BankRUs.Application.UseCases.OpenBankAccount
 {
     public class OpenBankAccountHandler
     {
-        private readonly IAccountRepository _accountRepository;
+        private readonly IBankAccountRepository _accountRepository;
 
-        public OpenBankAccountHandler(IAccountRepository accountRepository)
+        public OpenBankAccountHandler(IBankAccountRepository accountRepository)
         {
             _accountRepository = accountRepository;
         }
 
-        public async Task<OpenAccountResult> HandleAsync(OpenBankAccountCommand command)
+        public async Task<OpenBankAccountResult> HandleAsync(OpenBankAccountCommand command)
         {
             var accountNumber = GenerateAccountNumber();
-            var account = new BankAccount(command.UserId, accountNumber);
+            var account = new BankAccount(
+                userId: command.UserId,
+                accountNumber: accountNumber,
+                name: command.Name
+            );
+
 
             await _accountRepository.AddAsync(account);
 
-            return new OpenAccountResult(
-                UserId: command.UserId,
-                AccountId: account.Id,
-                AccountNumber: accountNumber);
+            return new OpenBankAccountResult(
+                     Id: account.Id,
+                     AccountNumber: account.AccountNumber,
+                     Name: account.Name,
+                     Balance: account.Balance,
+                     UserId: account.UserId
+            );
+
+
         }
 
         private string GenerateAccountNumber()

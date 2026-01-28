@@ -7,11 +7,11 @@ namespace BankRUs.Application.UseCases.OpenAccount;
 public class OpenAccountHandler
 {
     private readonly IIdentityService _identityService;
-    private readonly IAccountRepository _accountRepository;
+    private readonly IBankAccountRepository _accountRepository;
     private readonly IEmailSender _emailSender;
 
 
-    public OpenAccountHandler(IIdentityService identityService, IAccountRepository accountRepository, IEmailSender emailSender)
+    public OpenAccountHandler(IIdentityService identityService, IBankAccountRepository accountRepository, IEmailSender emailSender)
     {
         _identityService = identityService;
         _accountRepository = accountRepository;
@@ -42,7 +42,12 @@ public class OpenAccountHandler
         // Delegera till infrastructure
         var userId = createUserResult.UserId.Value;
         var accountNumber = GenerateAccountNumber();
-        var account = new BankAccount(userId, accountNumber);
+        var account = new BankAccount(
+                userId: userId,
+                accountNumber: accountNumber,
+                name: "Standardkonto"
+        );
+
 
         await _accountRepository.AddAsync(account);
 

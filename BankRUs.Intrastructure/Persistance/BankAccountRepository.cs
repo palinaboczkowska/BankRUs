@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace BankRUs.Intrastructure.Persistance;
 
-public class AccountRepository : IAccountRepository
+public class BankAccountRepository : IBankAccountRepository
 {
     private readonly ApplicationDbContext _dbContext;
 
-    public AccountRepository(ApplicationDbContext dbContext)
+    public BankAccountRepository(ApplicationDbContext dbContext)
     {
         _dbContext = dbContext;
     }

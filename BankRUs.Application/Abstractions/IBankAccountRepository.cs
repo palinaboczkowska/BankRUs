@@ -2,7 +2,7 @@
 
 namespace BankRUs.Application.Abstractions
 {
-    public interface IAccountRepository
+    public interface IBankAccountRepository
     {
         Task AddAsync(BankAccount account, CancellationToken cancellationToken = default);
         Task<IReadOnlyList<BankAccount>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);

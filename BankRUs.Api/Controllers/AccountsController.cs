@@ -13,9 +13,9 @@ namespace BankRUs.Api.Controllers;
 public class AccountsController : ControllerBase
 {
     private readonly OpenAccountHandler _openAccountHandler;
-    private readonly IAccountRepository _accountRepository;
+    private readonly IBankAccountRepository _accountRepository;
 
-    public AccountsController(OpenAccountHandler openAccountHandler, IAccountRepository accountRepository)
+    public AccountsController(OpenAccountHandler openAccountHandler, IBankAccountRepository accountRepository)
     {
         _openAccountHandler = openAccountHandler;
         _accountRepository = accountRepository;
@@ -55,7 +55,7 @@ public class AccountsController : ControllerBase
         var accounts = await _accountRepository.GetByUserIdAsync(userId);
 
         var result = accounts.Select(a =>
-            new BankAccountDto(a.Id, a.AccountNumber, a.Balance)
+            new BankAccountDto(a.Name, a.Id, a.AccountNumber, a.Balance)
         );
 
         return Ok(result);

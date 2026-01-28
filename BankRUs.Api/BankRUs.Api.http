@@ -17,7 +17,8 @@ POST https://localhost:8000/api/bank-accounts
 Content-Type: application/json
 
 {
-  "userId": "fafc87e2-344d-4023-9444-90f181d4b133"
+  "userId": "fafc87e2-344d-4023-9444-90f181d4b133",
+  "name": "Semesterkonto"
 }
 
 

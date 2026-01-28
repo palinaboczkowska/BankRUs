@@ -2,8 +2,9 @@
 {
     public record BankAccountDto
         (
+        string Name,
         Guid AccountId, 
-        string AccountNumber, 
+        string AccountNumber,
         decimal Balance
         );
 }

@@ -30,7 +30,7 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<OpenAccountHandler>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
-builder.Services.AddScoped<IAccountRepository, AccountRepository>();
+builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<OpenBankAccountHandler>();
 
