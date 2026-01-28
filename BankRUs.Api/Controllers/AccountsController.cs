@@ -26,8 +26,9 @@ public class AccountsController : ControllerBase
     public async Task<IActionResult> Create(CreateAccountRequestDto request)
     {
         // Tjocka vs Tunna controllers
-
-        var openAccountResult = await _openAccountHandler.HandleAsync(
+        try
+        {
+            var openAccountResult = await _openAccountHandler.HandleAsync(
             new OpenAccountCommand(
                 FirstName: request.FirstName,
                 LastName: request.LastName,
@@ -40,6 +41,12 @@ public class AccountsController : ControllerBase
 
         // Returnera 201 Created
         return Created(string.Empty, response);
+        }
+        catch (Exception ex)
+        {
+            return BadRequest(ex.Message);
+        }
+
     }
 
     [HttpGet("{userId:guid}")]

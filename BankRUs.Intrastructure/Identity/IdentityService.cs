@@ -31,12 +31,13 @@ public class IdentityService : IIdentityService
 
         if (!result.Succeeded)
         {
-            var errors = string.Join(", ", result.Errors.Select(e => e.Description));
-            throw new Exception($"Unable to create user: {errors}");
+            var errors = result.Errors.Select(e => e.Description).ToList();
+            return new CreateUserResult(null, errors);
         }
 
         await _userManager.AddToRoleAsync(user, Roles.Customer);
 
-        return new CreateUserResult(UserId: Guid.Parse(user.Id));
+        return new CreateUserResult(Guid.Parse(user.Id), []);
+
     }
 }

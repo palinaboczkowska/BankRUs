@@ -17,11 +17,11 @@ POST https://localhost:8000/api/bank-accounts
 Content-Type: application/json
 
 {
-  "userId": "2c7cc717-5dbe-4db3-a91f-6f40f91e2bff"
+  "userId": "fafc87e2-344d-4023-9444-90f181d4b133"
 }
 
 
 ### Hämta alla konton för en användare
 
-GET https://localhost:8000/api/accounts/2c7cc717-5dbe-4db3-a91f-6f40f91e2bff
+GET https://localhost:8000/api/accounts/fafc87e2-344d-4023-9444-90f181d4b133
 

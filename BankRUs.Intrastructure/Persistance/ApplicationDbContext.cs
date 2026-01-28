@@ -12,6 +12,15 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
+
+        builder.Entity<ApplicationUser>()
+            .HasIndex(u => u.SocialSecurityNumber)
+            .IsUnique();
+
+        builder.Entity<ApplicationUser>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+
         builder.Entity<BankAccount>(builder =>
         {
             builder.Property(x => x.Balance)
