@@ -33,7 +33,7 @@ builder.Services.AddScoped<IIdentityService, IdentityService>();
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<OpenBankAccountHandler>();
-
+builder.Services.AddHttpClient<TestPersonnummerValidator>();
 
 // 3 typer av livslängder på objekt
 // - singleton = ett och samma objekt delas mellan alla andra under hela applikations livslängd

@@ -9,19 +9,27 @@ public class OpenAccountHandler
     private readonly IIdentityService _identityService;
     private readonly IBankAccountRepository _accountRepository;
     private readonly IEmailSender _emailSender;
+    private readonly TestPersonnummerValidator _validator;
 
 
-    public OpenAccountHandler(IIdentityService identityService, IBankAccountRepository accountRepository, IEmailSender emailSender)
+
+    public OpenAccountHandler(IIdentityService identityService, IBankAccountRepository accountRepository, IEmailSender emailSender, TestPersonnummerValidator validator)
     {
         _identityService = identityService;
         _accountRepository = accountRepository;
         _emailSender = emailSender;
+        _validator = validator;
     }
 
     public async Task<OpenAccountResult> HandleAsync(OpenAccountCommand command)
     {
         // TODO: Skapa användarkonto (ASP.NET Core Identity)
         // Delegera till infrastructure
+        if (!await _validator.IsValidAsync(command.SocialSecurityNumber))
+        {
+            throw new InvalidOperationException("Ogiltigt personnummer enligt Skatteverket.");
+        }
+
         var createUserResult = await _identityService.CreateUserAsync(new CreateUserRequest(
             FirstName: command.FirstName,
             LastName: command.LastName,

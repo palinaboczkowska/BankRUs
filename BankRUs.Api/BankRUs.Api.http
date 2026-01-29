@@ -6,10 +6,10 @@ POST https://localhost:8000/api/accounts
 Content-Type: application/json
 
 {
-  "firstName": "Kelly",
+  "firstName": "Polly",
   "lastName": "Doe",
-  "socialSecurityNumber": "19910321-7205",
-  "email": "kelly@doe.com"
+  "socialSecurityNumber": "189001019802",
+  "email": "polly@doe.com"
 }
 
 ### Öppna bankkonto
@@ -17,7 +17,7 @@ POST https://localhost:8000/api/bank-accounts
 Content-Type: application/json
 
 {
-  "userId": "fafc87e2-344d-4023-9444-90f181d4b133",
+  "userId": "cf189338-51ab-4327-8cba-f363bd623ce3",
   "name": "Semesterkonto"
 }
 

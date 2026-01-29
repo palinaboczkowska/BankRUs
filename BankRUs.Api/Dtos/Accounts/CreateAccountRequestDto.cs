@@ -16,7 +16,7 @@ public record CreateAccountRequestDto(
     string LastName,
 
     [Required]
-    [SwedishSocialSecurityNumber]
+    //[SwedishSocialSecurityNumber]
     string SocialSecurityNumber,
 
     [Required]
