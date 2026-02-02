@@ -27,8 +27,9 @@ public sealed class AuthenticateUserHandler
         }
 
         var token = _tokenService.CreateToken(
-            UserId: authenticatedUser.UserId,
-            Email: authenticatedUser.Email);
+            userId: authenticatedUser.UserId,
+            email: authenticatedUser.Email,
+            roles: authenticatedUser.Roles);
 
         // 3. Returnera resultat
         return AuthenticateUserResult.Succeeded(

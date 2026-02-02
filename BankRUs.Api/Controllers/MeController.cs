@@ -5,7 +5,7 @@ using System.Security.Claims;
 namespace BankRUs.Api.Controllers;
 
 [Route("api/[controller]")]
-[Authorize]
+[Authorize(Roles = "Customer")]
 [ApiController]
 public class MeController : ControllerBase
 {

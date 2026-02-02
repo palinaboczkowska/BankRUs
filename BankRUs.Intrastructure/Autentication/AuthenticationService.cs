@@ -24,11 +24,13 @@ public class AuthenticationService : IAuthenticationService
         var validPassword = await _userManager.CheckPasswordAsync(user, password);
 
         if (!validPassword) return null;
+        var roles = await _userManager.GetRolesAsync(user);
 
         return new AuthenticatedUser(
             UserId: user.Id,
             UserName: user.UserName!,
-            Email: user.Email!
+            Email: user.Email!,
+            Roles: roles
         );
     }
 }

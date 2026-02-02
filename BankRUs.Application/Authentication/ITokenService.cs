@@ -2,5 +2,5 @@
 
 public interface ITokenService
 {
-    Token CreateToken(string UserId, string Email);
+    Token CreateToken(string userId, string email, IEnumerable<string>? roles = null);
 }

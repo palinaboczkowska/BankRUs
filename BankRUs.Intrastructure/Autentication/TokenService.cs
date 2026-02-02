@@ -21,7 +21,7 @@ public class TokenService : ITokenService
     }
 
 
-    public Token CreateToken(string UserId, string Email)
+    public Token CreateToken(string UserId, string Email, IEnumerable<string> roles)
     {
         // 1 - Lägg till claims
         var claims = new List<Claim>
@@ -31,6 +31,13 @@ public class TokenService : ITokenService
             new(JwtRegisteredClaimNames.Email, Email),
             new(JwtRegisteredClaimNames.PreferredUsername, Email),
         };
+
+        // Lägg till roller
+        foreach (var role in roles ?? Enumerable.Empty<string>())
+        {
+            // ClaimTypes.Role är standardvänligt i .NET
+            claims.Add(new Claim(ClaimTypes.Role, role));
+        }
 
         var issuer = _jwt.Issuer;
         var audience = _jwt.Audience;
