@@ -1,4 +1,5 @@
 ﻿using BankRUs.Application.Abstractions;
+using BankRUs.Application.Common;
 using BankRUs.Application.UseCases.GetSingleUser;
 using BankRUs.Application.UseCases.GetUsers;
 using BankRUs.Intrastructure.Persistance;
@@ -56,4 +57,36 @@ public class UserRepository : IUserRepository
                 .ToList()
         );
     }
+
+    public async Task<PagedResult<UserResult>> SearchAsync(int page, int pageSize, string ssn)
+    {
+        var query = _db.Users
+            .Where(u => u.SocialSecurityNumber.StartsWith(ssn))
+            .OrderBy(u => u.LastName)
+            .ThenBy(u => u.FirstName);
+
+        var totalItems = await query.CountAsync();
+
+        var users = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .Select(u => new UserResult(
+                u.Id,
+                u.FirstName,
+                u.LastName,
+                u.Email
+            ))
+            .ToListAsync();
+
+        var totalPages = (int)Math.Ceiling(totalItems / (double)pageSize);
+
+        return new PagedResult<UserResult>(
+            Data: users,
+            Page: page,
+            PageSize: pageSize,
+            TotalItems: totalItems,
+            TotalPages: totalPages
+        );
+    }
+
 }
