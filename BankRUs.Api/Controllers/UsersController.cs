@@ -4,6 +4,7 @@ using BankRUs.Api.Dtos.Users;
 using BankRUs.Application.Abstractions;
 using BankRUs.Application.UseCases.GetSingleUser;
 using BankRUs.Application.UseCases.GetUsers;
+using BankRUs.Application.UseCases.SearchCustomers;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -27,21 +28,46 @@ public class CustomersController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> Get(int page = 1, int pageSize = 20)
+    public async Task<IActionResult> Get(
+    int page = 1,
+    int pageSize = 20,
+    string? ssn = null)
     {
-        var handler = new GetUsersHandler(_repo, _options);
-        var result = await handler.Handle(new GetUsersQuery(page, pageSize));
+        if (!string.IsNullOrWhiteSpace(ssn))
+        {
+            var handler = new SearchCustomersHandler(_repo, _options);
+            var result = await handler.Handle(new SearchCustomersQuery(
+                Page: page,
+                PageSize: pageSize,
+                Ssn: ssn
+            ));
 
-        var dto = result.Data
+            var dto = result.Data
+                .Select(c => new UserDto(c.Id, c.FirstName, c.LastName, c.Email))
+                .ToList();
+
+            return Ok(new PagedResponse<UserDto>(
+                Data: dto,
+                Page: result.Page,
+                PageSize: result.PageSize,
+                TotalItems: result.TotalItems,
+                TotalPages: result.TotalPages
+            ));
+        }
+
+        var handlerAll = new GetUsersHandler(_repo, _options);
+        var all = await handlerAll.Handle(new GetUsersQuery(page, pageSize));
+
+        var dtoAll = all.Data
             .Select(c => new UserDto(c.Id, c.FirstName, c.LastName, c.Email))
             .ToList();
 
         return Ok(new PagedResponse<UserDto>(
-            Data: dto,
-            Page: result.Page,
-            PageSize: result.PageSize,
-            TotalItems: result.TotalItems,
-            TotalPages: result.TotalPages
+            Data: dtoAll,
+            Page: all.Page,
+            PageSize: all.PageSize,
+            TotalItems: all.TotalItems,
+            TotalPages: all.TotalPages
         ));
     }
 
