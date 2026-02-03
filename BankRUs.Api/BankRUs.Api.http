@@ -50,10 +50,10 @@ POST https://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "service@test.com",
+  "username": "service@test.com",
   "password": "Secret#1"
 }
 
 ### Get customers
-GET https://localhost:8000/api/customers?page=1&pageSize=10
-Authorization: Bearer {{token}}
+GET https://localhost:8000/api/customers?page=2&pageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTE3MzM0LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0._DrjLhvnjUTe99XZgLSVtNQALCLNwz55-hiiMtBGwO8

@@ -10,9 +10,10 @@ using BankRUs.Intrastructure.Autentication;
 using BankRUs.Intrastructure.Email;
 using BankRUs.Intrastructure.Identity;
 using BankRUs.Intrastructure.Persistance;
+using BankRUs.Intrastructure.Users;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
@@ -49,6 +50,7 @@ builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 
 builder.Services.AddHttpClient<TestPersonnummerValidator>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 // 3 typer av livslängder på objekt
 // - singleton = ett och samma objekt delas mellan alla andra under hela applikations livslängd
@@ -102,7 +104,8 @@ builder.Services
 builder.Services.AddAuthorization();
 
 
-builder.Services.Configure<QueryParamsOptions>(builder.Configuration.GetSection("QueryParamsOptions"));
+builder.Services.Configure<QueryParamsOptions>(
+    builder.Configuration.GetSection("QueryParams"));
 
 var app = builder.Build();
 
@@ -145,6 +148,25 @@ using (var scope = app.Services.CreateScope())
 
         await userManager.CreateAsync(user, "Secret#1");
         await userManager.AddToRoleAsync(user, "CustomerService");
+    }
+
+    for (int i = 1; i <= 15; i++)
+    {
+        var testEmail = $"user{i}@test.com";
+
+        if (await userManager.FindByEmailAsync(testEmail) == null)
+        {
+            var user = new ApplicationUser
+            {
+                UserName = testEmail,
+                Email = testEmail,
+                FirstName = $"User{i}",
+                LastName = "Test",
+                SocialSecurityNumber = $"19010101-00{i:D2}"
+            };
+
+            await userManager.CreateAsync(user, "Secret#1");
+        }
     }
 }
 
