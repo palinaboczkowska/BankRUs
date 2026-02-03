@@ -37,18 +37,18 @@ public class OpenAccountHandler
             Email: command.Email
          ));
 
-        if (!createUserResult.Succeeded || !createUserResult.UserId.HasValue)
+        if (!createUserResult.Succeeded || string.IsNullOrWhiteSpace(createUserResult.UserId))
+
         {
             throw new InvalidOperationException(
                 $"Unable to create user: {string.Join(", ", createUserResult.Errors)}"
             );
         }
 
-        // TODO: SocialSecurityNumber + Email ska vara UNIQUE
-
         // TODO: Skapa bankkonto
         // Delegera till infrastructure
-        var userId = createUserResult.UserId.Value;
+        var userId = createUserResult.UserId!;
+
         var accountNumber = GenerateAccountNumber();
         var account = new BankAccount(
                 userId: userId,

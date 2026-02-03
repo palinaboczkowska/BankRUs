@@ -9,7 +9,7 @@ namespace BankRUs.Application.UseCases.OpenBankAccount
     string AccountNumber,
     string Name,
     decimal Balance,
-    Guid UserId
+    string UserId
 );
 
 }

@@ -49,8 +49,8 @@ public class AccountsController : ControllerBase
 
     }
 
-    [HttpGet("{userId:guid}")]
-    public async Task<ActionResult<IEnumerable<BankAccountResponseDto>>> GetAccounts(Guid userId)
+    [HttpGet("{userId}")]
+    public async Task<ActionResult<IEnumerable<BankAccountResponseDto>>> GetAccounts(string userId)
     {
         var accounts = await _accountRepository.GetByUserIdAsync(userId);
 

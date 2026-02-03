@@ -1,3 +1,3 @@
 ﻿namespace BankRUs.Application.UseCases.OpenAccount;
 
-public record OpenAccountResult(Guid UserId, Guid AccountId, string AccountNumber);
+public record OpenAccountResult(string UserId, Guid AccountId, string AccountNumber);
