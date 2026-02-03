@@ -26,3 +26,18 @@ Content-Type: application/json
 
 GET https://localhost:8000/api/accounts/fafc87e2-344d-4023-9444-90f181d4b133
 
+
+
+
+### Login as CustomerService
+POST https://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "service@test.com",
+  "password": "Secret#1"
+}
+
+### Get customers
+GET https://localhost:8000/api/customers?page=1&pageSize=10
+Authorization: Bearer {{token}}

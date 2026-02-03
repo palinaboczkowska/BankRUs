@@ -1,3 +1,4 @@
+using BankRUs.Api.Configuration;
 using BankRUs.Application.Abstractions;
 using BankRUs.Application.Identity;
 using BankRUs.Application.UseCases.OpenAccount;
@@ -45,6 +46,8 @@ builder.Services
   .AddEntityFrameworkStores<ApplicationDbContext>()
   .AddDefaultTokenProviders();
 
+builder.Services.Configure<QueryParamsOptions>(builder.Configuration.GetSection("QueryParamsOptions"));
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -61,5 +64,33 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.MapControllers();
+
+
+using (var scope = app.Services.CreateScope())
+{
+    var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
+    var roleManager = scope.ServiceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+
+    if (!await roleManager.RoleExistsAsync("CustomerService"))
+        await roleManager.CreateAsync(new IdentityRole("CustomerService"));
+
+    var email = "service@test.com";
+
+    if (await userManager.FindByEmailAsync(email) == null)
+    {
+        var user = new ApplicationUser
+        {
+            UserName = email,
+            Email = email,
+            FirstName = "Service",
+            LastName = "User",
+            SocialSecurityNumber = "19010101-9999"
+        };
+
+        await userManager.CreateAsync(user, "Secret#1");
+        await userManager.AddToRoleAsync(user, "CustomerService");
+    }
+}
+
 
 app.Run();
