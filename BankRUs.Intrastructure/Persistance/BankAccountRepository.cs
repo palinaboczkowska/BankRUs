@@ -19,7 +19,7 @@ public class BankAccountRepository : IBankAccountRepository
         await _dbContext.SaveChangesAsync(cancellationToken);
     }
 
-    public async Task<IReadOnlyList<BankAccount>> GetByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<BankAccount>> GetByUserIdAsync(string userId, CancellationToken cancellationToken = default)
     {
         return await _dbContext.BankAccounts
             .Where(a => a.UserId == userId)

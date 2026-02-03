@@ -1,6 +1,6 @@
-@BankRUs.Api_HostAddress = https://localhost:8000
+ï»¿@BankRUs.Api_HostAddress = https://localhost:8000
 
-### Öppna konto
+### Ã–ppna konto
 
 POST https://localhost:8000/api/accounts
 Content-Type: application/json
@@ -8,21 +8,56 @@ Content-Type: application/json
 {
   "firstName": "Polly",
   "lastName": "Doe",
-  "socialSecurityNumber": "189001019802",
+  "socialSecurityNumber": "189001079806",
   "email": "polly@doe.com"
 }
 
-### Öppna bankkonto
+### Ã–ppna bankkonto
 POST https://localhost:8000/api/bank-accounts
 Content-Type: application/json
 
 {
-  "userId": "cf189338-51ab-4327-8cba-f363bd623ce3",
+  "userId": "0142dcf7-494c-4bab-8d94-21f95a40d346",
   "name": "Semesterkonto"
 }
 
 
-### Hämta alla konton för en användare
+### HÃ¤mta alla konton fÃ¶r en anvÃ¤ndare
 
-GET https://localhost:8000/api/accounts/fafc87e2-344d-4023-9444-90f181d4b133
+GET https://localhost:8000/api/accounts/0142dcf7-494c-4bab-8d94-21f95a40d346
+
+### Logga in / Autentisera
+
+POST https://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "polly@doe.com",
+  "password": "Secret#1"
+}
+
+### HÃ¤mta kontouppgifter
+
+GET https://localhost:8000/api/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5QGRvZS5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwb2xseUBkb2UuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJleHAiOjE3NzAxMjAxNzksImlzcyI6IkJhbmtSVXMuQXBpIiwiYXVkIjoiQmFua1JVcy5DbGllbnQifQ.CIf3PCFxKKcW8CEzxB1ylcUvI1WEXS3UNdCTc_AYqa0
+
+
+
+### Login as CustomerService
+POST https://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+  "username": "service@test.com",
+  "password": "Secret#1"
+}
+
+### Get customers
+GET https://localhost:8000/api/customers?page=1&pageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTIzMTkwLCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.f1t56hQxBWMrMs5ymfBoDylord-5r7CoNB0WMK7_9uQ
+
+### Get customer by id
+GET https://localhost:8000/api/customers/0142dcf7-494c-4bab-8d94-21f95a40d346
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTIzMTkwLCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.f1t56hQxBWMrMs5ymfBoDylord-5r7CoNB0WMK7_9uQ
 

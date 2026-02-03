@@ -26,6 +26,11 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             builder.Property(x => x.Balance)
               .HasPrecision(18, 2);
         });
+        builder.Entity<BankAccount>()
+           .HasOne<ApplicationUser>()                 
+           .WithMany(u => u.BankAccounts)           
+           .HasForeignKey(a => a.UserId)  
+           .HasPrincipalKey(u => u.Id); 
     }
 }
 

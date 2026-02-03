@@ -1,7 +1,7 @@
 ﻿namespace BankRUs.Api.Dtos.BankAccounts
 {
     public record CreateBankAccountRequestDto(
-            Guid UserId,
+            string UserId,
             string Name
         );
 
