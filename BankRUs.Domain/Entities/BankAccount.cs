@@ -6,6 +6,7 @@ public class BankAccount
 {
     public Guid Id { get; private set; }
     public Guid UserId { get; private set; }
+
     [MaxLength(25)]
     public string AccountNumber { get; private set; } = null!;
     public string Name { get; private set; }
