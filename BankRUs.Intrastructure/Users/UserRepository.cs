@@ -2,7 +2,9 @@
 using BankRUs.Application.Common;
 using BankRUs.Application.UseCases.GetSingleUser;
 using BankRUs.Application.UseCases.GetUsers;
+using BankRUs.Intrastructure.Identity;
 using BankRUs.Intrastructure.Persistance;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace BankRUs.Intrastructure.Users;
@@ -10,10 +12,12 @@ namespace BankRUs.Intrastructure.Users;
 public class UserRepository : IUserRepository
 {
     private readonly ApplicationDbContext _db;
+    private readonly UserManager<ApplicationUser> _userManager;
 
-    public UserRepository(ApplicationDbContext db)
+    public UserRepository(ApplicationDbContext db, UserManager<ApplicationUser> userManager)
     {
         _db = db;
+        _userManager = userManager;
     }
 
     public async Task<int> CountAsync()
@@ -88,5 +92,36 @@ public class UserRepository : IUserRepository
             TotalPages: totalPages
         );
     }
+
+    public async Task UpdateAccountDetailsAsync(
+    string userId,
+    string? firstName,
+    string? lastName,
+    string? email,
+    string? socialSecurityNumber)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user is null)
+            throw new Exception("User not found");
+
+        if (!string.IsNullOrWhiteSpace(firstName))
+            user.FirstName = firstName;
+
+        if (!string.IsNullOrWhiteSpace(lastName))
+            user.LastName = lastName;
+
+        if (!string.IsNullOrWhiteSpace(socialSecurityNumber))
+            user.SocialSecurityNumber = socialSecurityNumber;
+
+        if (!string.IsNullOrWhiteSpace(email))
+        {
+            await _userManager.SetEmailAsync(user, email);
+            await _userManager.SetUserNameAsync(user, email);
+        }
+
+        await _userManager.UpdateAsync(user);
+    }
+
 
 }

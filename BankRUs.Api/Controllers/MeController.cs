@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using BankRUs.Api.Dtos.Users;
+using BankRUs.Application.Abstractions;
+using BankRUs.Application.UseCases.UpdateAccountDetails;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -9,6 +12,13 @@ namespace BankRUs.Api.Controllers;
 [ApiController]
 public class MeController : ControllerBase
 {
+    private readonly IUserRepository _repo;
+
+    public MeController(IUserRepository repo)
+    {
+        _repo = repo;
+    }
+
     // GET /api/me
     [HttpGet]
     public IActionResult Get()
@@ -19,7 +29,8 @@ public class MeController : ControllerBase
         // GetAccountDetailsCommand(userId)
 
         var email = User.FindFirstValue(ClaimTypes.Email);
-        var userName = User.Identity?.Name ?? User.FindFirstValue(ClaimTypes.Name);
+        var userName = email;
+
 
         if (string.IsNullOrWhiteSpace(userId))
             return Unauthorized();
@@ -33,4 +44,28 @@ public class MeController : ControllerBase
         return Ok(response);
 
     }
+
+    // PATCH /api/me
+    [HttpPatch]
+    public async Task<IActionResult> Update([FromBody] UpdateAccountDetailsRequest request)
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Unauthorized();
+
+        var command = new UpdateAccountDetailsCommand(
+            UserId: userId,
+            FirstName: request.FirstName,
+            LastName: request.LastName,
+            Email: request.Email,
+            SocialSecurityNumber: request.SocialSecurityNumber
+        );
+
+        var handler = new UpdateAccountDetailsHandler(_repo);
+        await handler.Handle(command);
+
+        return NoContent();
+    }
+
+
 }
