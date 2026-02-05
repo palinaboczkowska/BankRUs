@@ -1,21 +1,19 @@
 ﻿@BankRUs.Api_HostAddress = https://localhost:8000
 
 ### Öppna konto
-
 POST https://localhost:8000/api/accounts
 Content-Type: application/json
-
 {
-  "firstName": "Polly",
+  "firstName": "Rolly",
   "lastName": "Doe",
-  "socialSecurityNumber": "189001079806",
-  "email": "polly@doe.com"
+  "socialSecurityNumber": "189001239806",
+  "email": "rolly@doe.com"
 }
+
 
 ### Öppna bankkonto
 POST https://localhost:8000/api/bank-accounts
 Content-Type: application/json
-
 {
   "userId": "0142dcf7-494c-4bab-8d94-21f95a40d346",
   "name": "Semesterkonto"
@@ -23,11 +21,48 @@ Content-Type: application/json
 
 
 ### Hämta alla konton för en användare
-
 GET https://localhost:8000/api/accounts/0142dcf7-494c-4bab-8d94-21f95a40d346
 
 ### Logga in / Autentisera
+POST https://localhost:8000/api/auth/login
+Content-Type: application/json
+{
+  "username": "polly@doe.com",
+  "password": "Secret#1"
+}
 
+
+### Hämta kontouppgifter
+GET https://localhost:8000/api/me
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsInByZWZlcnJlZF91c2VybmFtZSI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiZXhwIjoxNzcwMjg0NzE3LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.x2cRN5TsZA_G34_thtEZK3OK_Rx0vxtjFxMBQzBKkRA
+
+
+
+### Login as CustomerService
+POST https://localhost:8000/api/auth/login
+Content-Type: application/json
+{
+  "username": "service@test.com",
+  "password": "Secret#1"
+}
+
+
+### Get customers
+GET https://localhost:8000/api/customers?page=1&pageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTMyNjQ1LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.GdTIkLaTVG-4OR5-AD3WQtCcNcU0DElggPuPyCNY7HM
+
+### Get customer by id
+GET https://localhost:8000/api/customers/0142dcf7-494c-4bab-8d94-21f95a40d346
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTIzMTkwLCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.f1t56hQxBWMrMs5ymfBoDylord-5r7CoNB0WMK7_9uQ
+
+
+### Search customers by SSN
+GET https://localhost:8000/api/customers?ssn=19010101&page=1&pageSize=10
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTMwMTE0LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.hHdDU73oRsFRkF-5pej0vuhfUCvr3SaVeaVywRJs0hk
+
+
+### Login as Customer
 POST https://localhost:8000/api/auth/login
 Content-Type: application/json
 
@@ -36,33 +71,15 @@ Content-Type: application/json
   "password": "Secret#1"
 }
 
-### Hämta kontouppgifter
-
-GET https://localhost:8000/api/me
+### Update my account details
+PATCH https://localhost:8000/api/me
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5QGRvZS5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJwb2xseUBkb2UuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJleHAiOjE3NzAxMjAxNzksImlzcyI6IkJhbmtSVXMuQXBpIiwiYXVkIjoiQmFua1JVcy5DbGllbnQifQ.CIf3PCFxKKcW8CEzxB1ylcUvI1WEXS3UNdCTc_AYqa0
-
-
-
-### Login as CustomerService
-POST https://localhost:8000/api/auth/login
-Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsInByZWZlcnJlZF91c2VybmFtZSI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiZXhwIjoxNzcwMjg0NzE3LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.x2cRN5TsZA_G34_thtEZK3OK_Rx0vxtjFxMBQzBKkRA
 
 {
-  "username": "service@test.com",
-  "password": "Secret#1"
+  "firstName": "PollyUpdated",
+  "lastName": "DoeUpdated",
+  "email": "polly.updated@doe.com",
+  "socialSecurityNumber": "189001079999"
 }
 
-### Get customers
-GET https://localhost:8000/api/customers?page=1&pageSize=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTIzMTkwLCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.f1t56hQxBWMrMs5ymfBoDylord-5r7CoNB0WMK7_9uQ
-
-### Get customer by id
-GET https://localhost:8000/api/customers/0142dcf7-494c-4bab-8d94-21f95a40d346
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTIzMTkwLCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.f1t56hQxBWMrMs5ymfBoDylord-5r7CoNB0WMK7_9uQ
-
-
-
-### Search customers by SSN
-GET https://localhost:8000/api/customers?ssn=19010101&page=1&pageSize=10
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMTMwMTE0LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.hHdDU73oRsFRkF-5pej0vuhfUCvr3SaVeaVywRJs0hk

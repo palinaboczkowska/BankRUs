@@ -10,5 +10,13 @@ public interface IUserRepository
     Task<IReadOnlyList<UserResult>> GetPagedAsync(int page, int pageSize);
     Task<GetUserByIdResult?> GetByIdWithAccountsAsync(string id);
     Task<PagedResult<UserResult>> SearchAsync(int page, int pageSize, string ssn);
+    Task UpdateAccountDetailsAsync(
+        string userId,
+        string? firstName,
+        string? lastName,
+        string? email,
+        string? socialSecurityNumber
+    );
+
 
 }
