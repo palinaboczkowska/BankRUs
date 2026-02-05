@@ -2,6 +2,7 @@
 using BankRUs.Api.Dtos.BankAccounts;
 using BankRUs.Api.Dtos.Users;
 using BankRUs.Application.Abstractions;
+using BankRUs.Application.UseCases.DeleteAccount;
 using BankRUs.Application.UseCases.GetSingleUser;
 using BankRUs.Application.UseCases.GetUsers;
 using BankRUs.Application.UseCases.SearchCustomers;
@@ -96,6 +97,25 @@ public class CustomersController : ControllerBase
         );
 
         return Ok(dto);
+    }
+
+
+    // DELETE /api/customers/{id}
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(string id)
+    {
+        var command = new DeleteAccountCommand(id);
+        var handler = new DeleteAccountHandler(_repo);
+
+        try
+        {
+            await handler.Handle(command);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
     }
 
 }

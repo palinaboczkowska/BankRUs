@@ -4,10 +4,10 @@
 POST https://localhost:8000/api/accounts
 Content-Type: application/json
 {
-  "firstName": "Rolly",
+  "firstName": "Molly",
   "lastName": "Doe",
-  "socialSecurityNumber": "189001239806",
-  "email": "rolly@doe.com"
+  "socialSecurityNumber": "189001049817",
+  "email": "molly@doe.com"
 }
 
 
@@ -27,7 +27,7 @@ GET https://localhost:8000/api/accounts/0142dcf7-494c-4bab-8d94-21f95a40d346
 POST https://localhost:8000/api/auth/login
 Content-Type: application/json
 {
-  "username": "polly@doe.com",
+  "username": "molly@doe.com",
   "password": "Secret#1"
 }
 
@@ -87,3 +87,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmN
 DELETE https://localhost:8000/api/me
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsInByZWZlcnJlZF91c2VybmFtZSI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiZXhwIjoxNzcwMjg4NDI2LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.VdZsXgwvtSAx7cbKlNvnTgeqpZKEMBd0-cKDzU8cg1o
 
+### Delete customer by id
+DELETE https://localhost:8000/api/customers/abae0a63-bdef-458a-8655-188ad297f850
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJhZmQ4MWM2OS0yMGJmLTQ1MGYtOTNiNC1lZTEzYWU1MjU0MmUiLCJlbWFpbCI6InNlcnZpY2VAdGVzdC5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJzZXJ2aWNlQHRlc3QuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXJTZXJ2aWNlIiwiZXhwIjoxNzcwMjg4OTU4LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.Yg9KO-SPs7ieNRp6etG9Y_-LYeEH3xL1tan992Obf2k
