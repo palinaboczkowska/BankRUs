@@ -1,5 +1,6 @@
 ﻿using BankRUs.Api.Dtos.Users;
 using BankRUs.Application.Abstractions;
+using BankRUs.Application.UseCases.DeleteAccount;
 using BankRUs.Application.UseCases.UpdateAccountDetails;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -67,5 +68,25 @@ public class MeController : ControllerBase
         return NoContent();
     }
 
+    // DELETE /api/me
+    [HttpDelete]
+    public async Task<IActionResult> Delete()
+    {
+        var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+        if (string.IsNullOrWhiteSpace(userId))
+            return Unauthorized();
 
+        var command = new DeleteAccountCommand(userId);
+        var handler = new DeleteAccountHandler(_repo);
+
+        try
+        {
+            await handler.Handle(command);
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
+        {
+            return NotFound();
+        }
+    }
 }
