@@ -67,7 +67,7 @@ POST https://localhost:8000/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "polly@doe.com",
+  "username": "polly.updated@doe.com",
   "password": "Secret#1"
 }
 
@@ -82,4 +82,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmN
   "email": "polly.updated@doe.com",
   "socialSecurityNumber": "189001079999"
 }
+
+### Delete my account
+DELETE https://localhost:8000/api/me
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIwMTQyZGNmNy00OTRjLTRiYWItOGQ5NC0yMWY5NWE0MGQzNDYiLCJlbWFpbCI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsInByZWZlcnJlZF91c2VybmFtZSI6InBvbGx5LnVwZGF0ZWRAZG9lLmNvbSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IkN1c3RvbWVyIiwiZXhwIjoxNzcwMjg4NDI2LCJpc3MiOiJCYW5rUlVzLkFwaSIsImF1ZCI6IkJhbmtSVXMuQ2xpZW50In0.VdZsXgwvtSAx7cbKlNvnTgeqpZKEMBd0-cKDzU8cg1o
 

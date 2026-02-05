@@ -123,5 +123,16 @@ public class UserRepository : IUserRepository
         await _userManager.UpdateAsync(user);
     }
 
+    public async Task DeleteUserAsync(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
 
+        if (user is null)
+            throw new KeyNotFoundException("User not found");
+
+        var result = await _userManager.DeleteAsync(user);
+
+        if (!result.Succeeded)
+            throw new Exception("Failed to delete user");
+    }
 }

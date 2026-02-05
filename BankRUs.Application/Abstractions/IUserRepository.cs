@@ -17,6 +17,7 @@ public interface IUserRepository
         string? email,
         string? socialSecurityNumber
     );
+    Task DeleteUserAsync(string userId);
 
 
 }
