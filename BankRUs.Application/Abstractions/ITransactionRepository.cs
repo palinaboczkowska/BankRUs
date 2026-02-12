@@ -1,14 +1,17 @@
-﻿using BankRUs.Domain.Entities;
+﻿using BankRUs.Domain;
+using BankRUs.Domain.Entities;
 
 namespace BankRUs.Application.Abstractions;
 
 public interface ITransactionRepository
 {
-    Task<Transaction> CreateDepositAsync(
-        Guid bankAccountId,
-        string userId,
-        decimal amount,
-        string? reference,
-        decimal balanceAfter,
-        CancellationToken cancellationToken = default);
+    Task<Transaction> CreateAsync(
+    Guid bankAccountId,
+    string userId,
+    TransactionType type,
+    decimal amount,
+    string? reference,
+    decimal balanceAfter,
+    CancellationToken cancellationToken = default);
+
 }

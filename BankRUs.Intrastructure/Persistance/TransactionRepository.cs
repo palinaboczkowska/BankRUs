@@ -16,26 +16,31 @@ public class TransactionRepository : ITransactionRepository
         _db = db;
     }
 
-    public async Task<Transaction> CreateDepositAsync(
+    public async Task<Transaction> CreateAsync(
         Guid bankAccountId,
         string userId,
+        TransactionType type,
         decimal amount,
         string? reference,
         decimal balanceAfter,
         CancellationToken cancellationToken = default)
     {
-        var transaction = new Transaction(
-            bankAccountId,
-            userId,
-            TransactionType.Deposit,
-            amount,
-            reference,
-            balanceAfter
-        );
+        var transaction = new Transaction
+        {
+            Id = Guid.NewGuid(),
+            BankAccountId = bankAccountId,
+            UserId = userId,
+            Type = type,
+            Amount = amount,
+            Reference = reference,
+            CreatedAt = DateTime.UtcNow,
+            BalanceAfter = balanceAfter
+        };
 
-        await _db.Transactions.AddAsync(transaction, cancellationToken);
+        _db.Transactions.Add(transaction);
         await _db.SaveChangesAsync(cancellationToken);
 
         return transaction;
     }
+
 }
