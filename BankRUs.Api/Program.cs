@@ -3,9 +3,11 @@ using BankRUs.Application.Abstractions;
 using BankRUs.Application.Authentication;
 using BankRUs.Application.Authentication.AuthenticateUser;
 using BankRUs.Application.Identity;
+using BankRUs.Application.UseCases.DepositMoney;
 using BankRUs.Application.UseCases.OpenAccount;
 using BankRUs.Application.UseCases.OpenBankAccount;
 using BankRUs.Infrastructure.Configuration;
+using BankRUs.Infrastructure.Persistence;
 using BankRUs.Intrastructure.Autentication;
 using BankRUs.Intrastructure.Email;
 using BankRUs.Intrastructure.Identity;
@@ -15,6 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Scalar.AspNetCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -42,12 +45,15 @@ builder.Services.AddControllers();
 
 builder.Services.AddScoped<OpenAccountHandler>();
 builder.Services.AddScoped<IIdentityService, IdentityService>();
-builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<OpenBankAccountHandler>();
 builder.Services.AddScoped<AuthenticateUserHandler>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
+builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
+builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
+builder.Services.AddScoped<DepositMoneyHandler>();
+
 
 builder.Services.AddHttpClient<TestPersonnummerValidator>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -102,7 +108,8 @@ builder.Services
   });
 
 builder.Services.AddAuthorization();
-
+builder.Services.AddOpenApi();
+builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.Configure<QueryParamsOptions>(
     builder.Configuration.GetSection("QueryParams"));
@@ -111,6 +118,9 @@ var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
 {
+    app.MapOpenApi();
+    app.MapScalarApiReference();
+
     using var scope = app.Services.CreateScope();
 
     var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();

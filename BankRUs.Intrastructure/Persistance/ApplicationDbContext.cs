@@ -8,7 +8,7 @@ namespace BankRUs.Intrastructure.Persistance;
 public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : IdentityDbContext<ApplicationUser>(options)
 {
     public DbSet<BankAccount> BankAccounts { get; set; } = null!;
-
+    public DbSet<Transaction> Transactions { get; set; } = null!;
     protected override void OnModelCreating(ModelBuilder builder)
     {
         base.OnModelCreating(builder);
@@ -21,11 +21,23 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
             .HasIndex(u => u.Email)
             .IsUnique();
 
-        builder.Entity<BankAccount>(builder =>
+        // ⭐ Precision for BankAccount
+        builder.Entity<BankAccount>(entity =>
         {
-            builder.Property(x => x.Balance)
-              .HasPrecision(18, 2);
+            entity.Property(x => x.Balance)
+                  .HasPrecision(18, 2);
         });
+
+        // ⭐ Precision for Transaction
+        builder.Entity<Transaction>(entity =>
+        {
+            entity.Property(t => t.Amount)
+                  .HasPrecision(18, 2);
+
+            entity.Property(t => t.BalanceAfter)
+                  .HasPrecision(18, 2);
+        });
+
         builder.Entity<BankAccount>()
            .HasOne<ApplicationUser>()                 
            .WithMany(u => u.BankAccounts)           
