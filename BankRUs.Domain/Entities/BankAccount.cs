@@ -11,7 +11,7 @@ public class BankAccount
     public string AccountNumber { get; private set; } = null!;
     public string Name { get; private set; }
 
-    public decimal Balance { get; private set; }
+    public decimal Balance { get; set; }
     public DateTime CreatedAt { get; private set; }
 
     private BankAccount() { } // för EF

@@ -25,4 +25,18 @@ public class BankAccountRepository : IBankAccountRepository
             .Where(a => a.UserId == userId)
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<BankAccount?> GetByIdAsync(Guid bankAccountId)
+    {
+        return await _dbContext.BankAccounts
+            .FirstOrDefaultAsync(a => a.Id == bankAccountId);
+    }
+
+
+
+    public async Task UpdateAsync(BankAccount account)
+    {
+        _dbContext.BankAccounts.Update(account);
+        await _dbContext.SaveChangesAsync();
+    }
 }
