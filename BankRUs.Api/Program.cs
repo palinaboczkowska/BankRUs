@@ -44,30 +44,23 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<OpenAccountHandler>();
-builder.Services.AddScoped<IIdentityService, IdentityService>();
-builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<OpenBankAccountHandler>();
 builder.Services.AddScoped<AuthenticateUserHandler>();
+builder.Services.AddScoped<DepositMoneyHandler>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IIdentityService, IdentityService>();
+builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 builder.Services.AddScoped<ITokenService, TokenService>();
 builder.Services.AddScoped<IBankAccountRepository, BankAccountRepository>();
 builder.Services.AddScoped<ITransactionRepository, TransactionRepository>();
-builder.Services.AddScoped<DepositMoneyHandler>();
-
 
 builder.Services.AddHttpClient<TestPersonnummerValidator>();
-builder.Services.AddScoped<IUserRepository, UserRepository>();
-
-// 3 typer av livslängder på objekt
-// - singleton = ett och samma objekt delas mellan alla andra under hela applikations livslängd
-// - scoped = varje HTTP-reqeust får sin egen isntans som sen delas av alla objekt inom denna request
-// - transitent = varje objekt får alltid sin egna instans av typen
 
 builder.Services
   .AddIdentity<ApplicationUser, IdentityRole>()
   .AddEntityFrameworkStores<ApplicationDbContext>()
   .AddDefaultTokenProviders();
-
 
 builder.Services.Configure<JwtOptions>(builder.Configuration.GetSection(JwtOptions.SectionName));
 
