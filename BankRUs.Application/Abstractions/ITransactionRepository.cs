@@ -14,4 +14,12 @@ public interface ITransactionRepository
     decimal balanceAfter,
     CancellationToken cancellationToken = default);
 
+    Task<(List<Transaction> items, int totalCount)> GetForAccountAsync(
+    Guid accountId,
+    DateTime? from,
+    DateTime? to,
+    string? type,
+    string sort,
+    int page,
+    int pageSize);
 }

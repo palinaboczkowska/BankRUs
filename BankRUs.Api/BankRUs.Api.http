@@ -28,6 +28,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODgyYTA1Z
   "amount": 250.00,
   "reference": "Lön januari"
 }
+
 ### Withdrawals
 POST https://localhost:8000/api/bank-accounts/567e715d-58b2-4f20-a41e-1b41c65cbbe2/withdrawals
 Content-Type: application/json
@@ -37,6 +38,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODgyYTA1Z
   "amount": 90.00,
   "reference": "Uttag bankomat"
 }
+
+### Hämta alla transaktioner för en användare
+GET https://localhost:8000/api/bank-accounts/567e715d-58b2-4f20-a41e-1b41c65cbbe2/transactions?page=1&pageSize=20
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODgyYTA1Zi00NDA2LTRmOWMtOTY0Ny00YzFiZjkwMWJmZjgiLCJlbWFpbCI6ImJvbGx5QGRvZS5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJib2xseUBkb2UuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJleHAiOjE3NzEyNTU3NjEsImlzcyI6IkJhbmtSVXMuQXBpIiwiYXVkIjoiQmFua1JVcy5DbGllbnQifQ.es36t0lsiAakbYEc8Bhuve9TBXr5-_k0_WXQMtxK8_U
+
+### Hämta alla transaktioner för en användare med sort
+GET https://localhost:8000/api/bank-accounts/567e715d-58b2-4f20-a41e-1b41c65cbbe2/transactions?sort=asc
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODgyYTA1Zi00NDA2LTRmOWMtOTY0Ny00YzFiZjkwMWJmZjgiLCJlbWFpbCI6ImJvbGx5QGRvZS5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJib2xseUBkb2UuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJleHAiOjE3NzEyNTU3NjEsImlzcyI6IkJhbmtSVXMuQXBpIiwiYXVkIjoiQmFua1JVcy5DbGllbnQifQ.es36t0lsiAakbYEc8Bhuve9TBXr5-_k0_WXQMtxK8_U
+
+### Hämta alla transaktioner för en användare med typ
+GET https://localhost:8000/api/bank-accounts/567e715d-58b2-4f20-a41e-1b41c65cbbe2/transactions?type=deposit
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI0ODgyYTA1Zi00NDA2LTRmOWMtOTY0Ny00YzFiZjkwMWJmZjgiLCJlbWFpbCI6ImJvbGx5QGRvZS5jb20iLCJwcmVmZXJyZWRfdXNlcm5hbWUiOiJib2xseUBkb2UuY29tIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjoiQ3VzdG9tZXIiLCJleHAiOjE3NzEyNTU3NjEsImlzcyI6IkJhbmtSVXMuQXBpIiwiYXVkIjoiQmFua1JVcy5DbGllbnQifQ.es36t0lsiAakbYEc8Bhuve9TBXr5-_k0_WXQMtxK8_U
 
 
 ### Hämta alla konton för en användare

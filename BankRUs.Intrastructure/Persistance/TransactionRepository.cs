@@ -43,4 +43,44 @@ public class TransactionRepository : ITransactionRepository
         return transaction;
     }
 
+    public async Task<(List<Transaction> items, int totalCount)> GetForAccountAsync(
+    Guid accountId,
+    DateTime? from,
+    DateTime? to,
+    string? type,
+    string sort,
+    int page,
+    int pageSize)
+    {
+        var query = _db.Transactions
+            .Where(t => t.BankAccountId == accountId)
+            .AsQueryable();
+
+        if (from.HasValue)
+            query = query.Where(t => t.CreatedAt >= from.Value);
+
+        if (to.HasValue)
+            query = query.Where(t => t.CreatedAt <= to.Value);
+
+        if (!string.IsNullOrEmpty(type))
+        {
+            if (type == "deposit")
+                query = query.Where(t => t.Type == TransactionType.Deposit);
+            else if (type == "withdrawal")
+                query = query.Where(t => t.Type == TransactionType.Withdrawal);
+        }
+
+        query = sort == "asc"
+            ? query.OrderBy(t => t.CreatedAt)
+            : query.OrderByDescending(t => t.CreatedAt);
+
+        var totalCount = await query.CountAsync();
+
+        var items = await query
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (items, totalCount);
+    }
 }
